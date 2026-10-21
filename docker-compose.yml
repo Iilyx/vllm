@@ -11,11 +11,7 @@ services:
       - "8000:8000"
     volumes:
       - ./models:/models:ro
-    environment:
-      HF_HUB_OFFLINE: "1"
-      TRANSFORMERS_OFFLINE: "1"
     command:
-      - --model
       - ${MODEL_PATH:-/models}
       - --served-model-name
       - qwen3.5-4b
@@ -30,7 +26,7 @@ services:
       - --reasoning-parser
       - qwen3
       - --limit-mm-per-prompt
-      - image=4
+      - '{"image": 4}'
     deploy:
       resources:
         reservations:
