@@ -1,4 +1,4 @@
-# Только vLLM. Модель уже лежит на диске в ./models.
+# Только vLLM. Веса лежат в ./models/Qwen3.5-4B.
 # Картинки включены: флага --language-model-only здесь нет.
 
 services:
@@ -10,9 +10,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./models:/models:ro
+      - ./models/Qwen3.5-4B:/models/Qwen3.5-4B:ro
     command:
-      - ${MODEL_PATH:-/models}
+      - ${MODEL_PATH:-/models/Qwen3.5-4B}
       - --served-model-name
       - qwen3.5-4b
       - --host
@@ -36,13 +36,3 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    healthcheck:
-      test:
-        - CMD
-        - python3
-        - -c
-        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')
-      interval: 30s
-      timeout: 10s
-      retries: 30
-      start_period: 180s
